@@ -29,9 +29,11 @@ const divEl = ref(null);
 let tEcahrts = null;
 
 watch(
-  () => props,
+  () => props.echartsDatas,
   (newV) => {
-    console.log(newV);
+    if (newV) {
+      setupOption(props.echartsDatas);
+    }
   }
 );
 

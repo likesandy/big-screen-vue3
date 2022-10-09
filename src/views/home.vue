@@ -3,33 +3,45 @@
     <div class="header"></div>
 
     <div class="left-top">
-      <charts :echarts-datas="chargingPile" :get-option="pieGetOption"></charts>
+      <charts
+        v-if="chargingPile"
+        :echarts-datas="chargingPile"
+        :get-option="pieGetOption"
+      ></charts>
     </div>
     <div class="left-bottom">
       <charts
+        v-if="processMonitoring"
         :echarts-datas="processMonitoring"
         :get-option="barGetOption"
       ></charts>
     </div>
 
     <div class="right-top">
-      <right-top-panel></right-top-panel>
+      <right-top-panel v-if="chargingTop4"></right-top-panel>
     </div>
     <div class="right-center">
       <charts
+        v-if="chargingStatistics"
         :echarts-datas="chargingStatistics"
         :get-option="lineGetOption"
       ></charts>
     </div>
     <div class="right-bottom">
-      <right-bottom-bg :echarts-datas="exceptionMonitoring"></right-bottom-bg>
+      <right-bottom-bg
+        v-if="exceptionMonitoring"
+        :echarts-datas="exceptionMonitoring"
+      ></right-bottom-bg>
     </div>
 
     <div class="center">
       <center-svg></center-svg>
     </div>
     <div class="bottom">
-      <bottom-panel :panelItems="dataAnalysis"></bottom-panel>
+      <bottom-panel
+        v-if="dataAnalysis"
+        :panelItems="dataAnalysis"
+      ></bottom-panel>
     </div>
   </main>
 </template>
@@ -62,6 +74,7 @@ setupGetPowerScreenData();
 
 function setupGetPowerScreenData() {
   getPowerScreenData().then((res) => {
+    console.log(res);
     chargingPile.value = res.chargingPile.data;
     chargingStatistics.value = res.chargingStatistics.data;
     chargingTop4.value = res.chargingTop4.data;
